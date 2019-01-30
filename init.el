@@ -39,15 +39,17 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#050000" :foreground "#bbe0f0" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "DAMA" :family "Ubuntu Mono "))))
+ '(default ((t (:inherit nil :stipple nil :background "#050000" :foreground "#bbe0f0" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "DAMA" :family "Ubuntu Mono"))))
  '(c-annotation-face ((t (:inherit font-lock-constant-face))))
+ '(custom-group-tag-1 ((t (:inherit variable-pitch :foreground "SpringGreen1" :weight bold :height 1.2))))
+ '(error ((t (:foreground "SpringGreen1" :weight bold))))
  '(font-lock-builtin-face ((t (:foreground "#ff90ff"))))
  '(font-lock-comment-delimiter-face ((t (:foreground "#808080" :slant italic))))
  '(font-lock-comment-face ((t (:foreground "#808080" :slant italic))))
  '(font-lock-constant-face ((t (:foreground "#ff0055" :weight semi-bold))))
  '(font-lock-doc-face ((t (:foreground "#ffffff" :weight bold))))
- '(font-lock-function-name-face ((t (:foreground "#ff6644" :weight extra-bold))))
- '(font-lock-keyword-face ((t (:foreground "#ff6644" :weight bold))))
+ '(font-lock-function-name-face ((t (:foreground "#cc6644" :weight extra-bold))))
+ '(font-lock-keyword-face ((t (:foreground "#cc6644" :weight bold))))
  '(font-lock-negation-char-face ((t (:foreground "#00aaff"))))
  '(font-lock-preprocessor-face ((t (:foreground "#3355ff" :weight extra-bold))))
  '(font-lock-string-face ((t (:foreground "#00ff55"))))
