@@ -7,7 +7,7 @@
 			 ("gnu"   . "http://elpa.gnu.org/packages/")
 			 ("melpa" . "https://melpa.org/packages/")
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")
-			 ("org"   . "https://orgmode.org/elpa/"))
+			 ("org"   . "https://orgmode.org/elpa/")))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
