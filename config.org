@@ -13,7 +13,8 @@
 #+END_SRC
 ** keybindig for ansi-term
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<s-return>") 'ansi-term)
+(global-set-key (kbd "C-c t") 'ansi-term)
+(global-set-key (kbd "C-c s" ) 'eshell)
 #+END_SRC
 * Bell
 ** Turn off bell
@@ -280,6 +281,15 @@
     (diminish 'subword-mode)
     (diminish 'rainbow-mode))
 #+END_SRC
+* tilde
+#+BEGIN_SRC emacs-lisp
+   (require 'iso-transl)
+#+END_SRC
+* linum
+#+BEGIN_SRC emacs-lisp
+  (setq linum-format " %d")
+#+END_SRC
+
 * line numbers
 ** for version >= 26.0
 #+BEGIN_SRC emacs-lisp
@@ -341,8 +351,3 @@
 #+BEGIN_SRC emacs-lisp
     (prefer-coding-system 'utf-8)
 #+END_SRC
-* tilde
-#+BEGIN_SRC emacs-lisp
-   (require 'iso-transl)
-#+END_SRC
-
