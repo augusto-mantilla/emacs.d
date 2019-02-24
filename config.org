@@ -241,7 +241,16 @@
 ** Basic config
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'org-structure-template-alist
-               '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+	       '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+  (require 'ox-latex)
+  (unless (boundp 'org-latex-classes)
+    (setq org-latex-classes nil))
+  (add-to-list 'org-latex-classes
+	       '("article"
+		 "\\documentclass{article}"
+		 ("\\section{%s}" . "\\section*{%s}")))
+
+
 #+END_SRC
 * Auto completion
 ** auto-complete
@@ -285,11 +294,6 @@
 #+BEGIN_SRC emacs-lisp
    (require 'iso-transl)
 #+END_SRC
-* linum
-#+BEGIN_SRC emacs-lisp
-  (setq linum-format " %d")
-#+END_SRC
-
 * line numbers
 ** for version >= 26.0
 #+BEGIN_SRC emacs-lisp
@@ -350,4 +354,25 @@
 * preferd codification
 #+BEGIN_SRC emacs-lisp
     (prefer-coding-system 'utf-8)
+#+END_SRC
+* Pdf tools
+#+BEGIN_SRC emacs-lisp
+  (use-package pdf-tools
+  :ensure t)
+  (use-package org-pdfview
+  :ensure t)
+
+  (require 'pdf-tools)
+  (require 'org-pdfview)
+
+#+END_SRC
+
+* Golang
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'before-save-hook 'gofmt-before-save)
+#+END_SRC
+* Custom theme
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path "~/.emacs.d/themes")
+  (load "jbeansa-theme")
 #+END_SRC
