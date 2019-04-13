@@ -226,7 +226,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package sudo-edit
     :ensure t
-    :bind ("s-e" . sudo-edit))
+    :bind ("C-M-e" . sudo-edit))
 #+END_SRC
 * Dashboard
 ** 
@@ -370,9 +370,23 @@
 * Golang
 #+BEGIN_SRC emacs-lisp
   (add-hook 'before-save-hook 'gofmt-before-save)
+  (global-set-key (kbd "C-c c") 'compile)
 #+END_SRC
 * Custom theme
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'load-path "~/.emacs.d/themes")
   (load "jbeansa-theme")
+#+END_SRC
+* Multiple lines cursor
+#+BEGIN_SRC emacs-lisp
+(require 'multiple-cursors)
+(global-set-key (kbd "C-c m c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this) 
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this) 
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+#+END_SRC
+* Magit
+** magit status keybinding
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c g") 'magit-status)
 #+END_SRC
