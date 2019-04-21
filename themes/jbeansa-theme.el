@@ -38,7 +38,7 @@
 
 (let ((class '((class color) (min-colors 89)))
       ;;                                            GUI       TER
-      (jbeansa-fg         (if (display-graphic-p) "#cccccc" "#cccccc"))
+      (jbeansa-fg         (if (display-graphic-p) "#ffffff" "#ffffff"))
       (jbeansa-bg         (if (display-graphic-p) "#000000" "#000000"))
       (jbeansa-grey-0     (if (display-graphic-p) "#151515" "#151515"))
       (jbeansa-grey-1     (if (display-graphic-p) "#112433" "#112433"))
@@ -67,7 +67,7 @@
       (jbeansa-green-4    (if (display-graphic-p) "#335533" "#335533"))
       (jbeansa-green-5    (if (display-graphic-p) "#99ad6a" "#99ad6a"))
       (jbeansa-green-6    (if (display-graphic-p) "#a8ff60" "#a8ff60"))
-      (jbeansa-green-7    (if (display-graphic-p) "#52ee79" "#52ee79"))
+      (jbeansa-green-7    (if (display-graphic-p) "#52cc79" "#52cc79"))
       (jbeansa-yellow-0   (if (display-graphic-p) "#ffffcc" "#ffffcc"))
       (jbeansa-yellow-1   (if (display-graphic-p) "#ffff00" "#ffff00"))
       (jbeansa-yellow-2   (if (display-graphic-p) "#eddb87" "#eddb87"))
