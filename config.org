@@ -152,7 +152,7 @@
     (setq switch-window-threshold 2)
     (setq switch-window-shortcut-style 'qwerty)
     (setq switch-window-querty-shortcuts
-          '("a", "s", "d", "f", "j", "k", "l", "l"))
+          '("a", "s", "d", "f", "j", "k", "l", "ç"))
     :bind
     ([remap other-window] . switch-window))
 #+END_SRC
@@ -392,9 +392,6 @@
 #+END_SRC
 * Eshell prompt git branch
 #+BEGIN_SRC emacs-lisp
-
-;;(:foreground ,"#338888" :bold t)
-	;;   propertize "\n└─ $ ▶ " 'face 'default
 (setq eshell-history-size 1024)
 (setq eshell-prompt-regexp "^[^#$]*[#$] ")
 
@@ -432,7 +429,7 @@ PWD is not in a git repo (or the git command is not found)."
               (if (> (length git-output) 0)
                   (substring git-output 0 -1)
                 "(no branch)")
-              ")") 'face `(:foreground ,"#eeaa88" :bold t))
+              ")") 'face `(:foreground ,"#44cc33" :bold t))
       )))
 
 (setq eshell-prompt-function
@@ -452,11 +449,9 @@ PWD is not in a git repo (or the git command is not found)."
               (mapconcat (lambda (elm) elm)
                          p-lst
                          "/")))
-          (split-string (pwd-repl-home (eshell/pwd)) "/")) 'face `(:foreground ,"#33aa99" :bold t))
+          (split-string (pwd-repl-home (eshell/pwd)) "/")) 'face `(:foreground ,"#33ccbb" :bold t))
          (or (curr-dir-git-branch-string (eshell/pwd)))
          (propertize "\n└─ $ ▶ " 'face 'default))))
 
 (setq eshell-highlight-prompt nil)
-
-
 #+END_SRC
