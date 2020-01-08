@@ -1,11 +1,15 @@
+;;; Package --- Summary
+;;; Commentary:
 ;; This is all kinds of necessary
+;;; Code:
 (require 'package)
 (setq package-enable-at-startup nil)
 
 ;;; remove SC if you are not using sunrise commander and org if you like outdated packages
 (setq package-archives '(("ELPA"  . "http://tromey.com/elpa/")
-			 ("gnu"   . "http://elpa.gnu.org/packages/")
+;;;			 ("gnu"   . "http://elpa.gnu.org/packages/")
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")
 			 ("org"   . "https://orgmode.org/elpa/")))
 (package-initialize)
 
@@ -38,7 +42,7 @@
  '(main-line-color2 "#09150F")
  '(package-selected-packages
    (quote
-    (multiple-cursors magit go-mode org-link-minor-mode org-pdfview pdf-tools web-mode diminish spaceline auto-complete dashboard sudo-edit hungry-delete switch-window rainbow-delimiters rainbow-mode avy smex org-bullets beacon which-key abyss-theme use-package)))
+    (evil web-mode flymd json-mode pretty-mode xref-js2 js2-refactor js2-mode flycheck-rust rust-mode flycheck eshell-git-prompt multiple-cursors magit go-mode org-link-minor-mode org-pdfview pdf-tools diminish spaceline auto-complete dashboard sudo-edit hungry-delete switch-window rainbow-delimiters rainbow-mode avy smex org-bullets beacon which-key abyss-theme use-package)))
  '(pdf-view-midnight-colors (quote ("#FDF4C1" . "#282828")))
  '(pos-tip-background-color "#36473A")
  '(pos-tip-foreground-color "#FFFFC8")
@@ -56,5 +60,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#cccccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 105 :width normal :foundry "PfEd" :family "DejaVu Sans Mono")))))
-(add-to-list 'default-frame-alist '(background-color . "#000000"))
+ '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#cccccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "PfEd" :family "DejaVu Sans Mono")))))
+
+(provide 'init)
+;;; init.el ends here
+(put 'upcase-region 'disabled nil)
