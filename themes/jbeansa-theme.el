@@ -120,6 +120,7 @@
        `(eshell-ls-product                   ((,class (:foreground ,jbeansa-fg))))
        `(eshell-ls-symlink                   ((,class (:weight normal :foreground ,jbeansa-red-org))))
        `(eshell-ls-backup                   ((,class (:weight normal :foreground ,jbeansa-yellow-org))))
+       `(eshell-ls-archive                   ((,class (:weight normal :foreground ,jbeansa-red-org))))
 ;;;;; Evil
        `(evil-visual-mark-face               ((,class (:weight ultra-bold :box ,jbeansa-blue-org :foreground ,jbeansa-green-org))))
 ;;;;; FCI Ruler
