@@ -42,7 +42,7 @@
  '(main-line-color2 "#09150F")
  '(package-selected-packages
    (quote
-    (evil web-mode flymd json-mode pretty-mode xref-js2 js2-refactor js2-mode flycheck-rust rust-mode flycheck eshell-git-prompt multiple-cursors magit go-mode org-link-minor-mode org-pdfview pdf-tools diminish spaceline auto-complete dashboard sudo-edit hungry-delete switch-window rainbow-delimiters rainbow-mode avy smex org-bullets beacon which-key abyss-theme use-package)))
+    (web-mode flymd json-mode pretty-mode xref-js2 js2-refactor js2-mode flycheck-rust rust-mode flycheck eshell-git-prompt multiple-cursors magit go-mode org-link-minor-mode org-pdfview pdf-tools diminish spaceline auto-complete dashboard sudo-edit hungry-delete switch-window rainbow-delimiters rainbow-mode avy smex org-bullets beacon which-key abyss-theme use-package)))
  '(pdf-view-midnight-colors (quote ("#FDF4C1" . "#282828")))
  '(pos-tip-background-color "#36473A")
  '(pos-tip-foreground-color "#FFFFC8")
@@ -55,13 +55,16 @@
 	    (quote rainbow-mode)
 	    nil t)
 	   (rainbow-mode 1))))))
+(add-to-list 'default-frame-alist
+                       '(font . "Inconsolata-12"))
+
+(put 'upcase-region 'disabled nil)
+(provide 'init)
+;;; init.el ends here
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#cccccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "PfEd" :family "DejaVu Sans Mono")))))
-
-(provide 'init)
-;;; init.el ends here
-(put 'upcase-region 'disabled nil)
+ '(js2-function-param ((t (:inherit font-lock-builtin-face)))))

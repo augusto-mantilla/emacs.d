@@ -393,8 +393,9 @@
 #+END_SRC
 * eviroment var
 #+BEGIN_SRC emacs-lisp
-(setenv "GOOGLE_CLIENT_ID" "608621652614-2qd9a4gbf7gq4eu9god80o8bnh9pm2qq.apps.googleusercontent.com")
-(setenv "GOOGLE_CLIENT_SECRET" "4-LZrLdA26_P5KkIdjky1HUI")
+  (setenv "GOOGLE_CLIENT_ID" "608621652614-2qd9a4gbf7gq4eu9god80o8bnh9pm2qq.apps.googleusercontent.com")
+  (setenv "GOOGLE_CLIENT_SECRET" "4-LZrLdA26_P5KkIdjky1HUI")
+  (setenv "PATH" (concat (getenv "PATH") ":" "/home/augusto/go/bin"))
 #+END_SRC
 * JavaScript
 ** js2-mode
@@ -466,4 +467,19 @@
   )
   (add-hook 'web-mode-hook  'my-web-mode-hook)
 (add-hook 'web-mode-hook 'prettier-js-mode)
+#+end_src
+* Autofill mode
+#+begin_src emacs-lisp
+  ;;; Commentary:
+    ;; Adds a newline when the comment is out of the buffer
+    ;;; Code:
+    (defun comment-auto-fill ()
+	  (setq-local comment-auto-fill-only-comments t)
+	  (auto-fill-mode 1))
+  (add-hook 'prog-mode-hook 'comment-auto-fill)
+
+#+end_src
+* Execution path
+#+begin_src emacs-lisp
+  (setq exec-path (append exec-path '("/home/augusto/go/bin")))
 #+end_src
