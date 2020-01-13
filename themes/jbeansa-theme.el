@@ -131,7 +131,7 @@
 ;;;;; Fonts
        `(font-lock-builtin-face              ((,class (:foreground ,jbeansa-red-org))))
        `(font-lock-comment-face              ((,class (:slant italic :foreground ,jbeansa-grey-7))))
-       `(font-lock-constant-face             ((,class (:foreground ,jbeansa-blue-org))))
+       `(font-lock-constant-face             ((,class (:foreground ,jbeansa-red-org))))
        `(font-lock-doc-face                  ((,class (:foreground ,jbeansa-purple-org))))
        `(font-lock-function-name-face        ((,class (:foreground ,jbeansa-green-org :bold t))))
        `(font-lock-keyword-face              ((,class (:foreground ,jbeansa-blue-org :bold t))))
