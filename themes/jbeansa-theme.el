@@ -168,7 +168,7 @@
        `(helm-ff-executable                  ((,class (:foreground ,jbeansa-purple-org))))
 ;;;;; Highlight
        `(highlight                           ((,class (:foreground, jbeansa-bg :background ,jbeansa-fg))))
-       `(hl-line                             ((,class (:background ,jbeansa-bg))))
+       `(hl-line                             ((,class (:background ,jbeansa-grey-4))))
 ;;;;; iSearch
        `(isearch                             ((,class (:foreground ,jbeansa-fg :background ,jbeansa-red-org))))
        `(isearch-fail                        ((,class (:background ,jbeansa-red-org))))
