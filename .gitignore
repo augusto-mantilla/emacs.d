@@ -13,3 +13,10 @@ tramp
 
 \#*
 games/*
+/emojis/
+/image-dired/
+/projectile-bookmarks.eld
+/projectile.cache
+/transient/
+/url/
+/var/

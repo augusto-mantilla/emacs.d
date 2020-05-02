@@ -1,4 +1,4 @@
-;;; jbeans-theme.el --- Jbeans theme for GNU Emacs 24 (deftheme)
+;;; jbeansa-theme.el --- Jbeans theme for GNU Emacs 24 (deftheme)
 ;;; Commentary:
 ;; Author: Adam Olsen <arolsen@gmail.com>
 ;; URL: <https://github.com/synic/jbeans-emacs>
@@ -45,24 +45,26 @@
       (jbeansa-grey-3     (if (display-graphic-p) "#333344" "#444455"))
       (jbeansa-grey-4     (if (display-graphic-p) "#363636" "#363636"))
       (jbeansa-grey-5     (if (display-graphic-p) "#444444" "#444444"))
-      (jbeansa-grey-6     (if (display-graphic-p) "#7f7f7f" "#7f7f7f"))
+      (jbeansa-grey-6     (if (display-graphic-p) "#666666" "#666666"))
       (jbeansa-grey-7     (if (display-graphic-p) "#888888" "#888888"))
       (jbeansa-grey-org     (if (display-graphic-p) "#dddddd" "#dddddd"))
       (jbeansa-purple-org   (if (display-graphic-p) "#9966FF" "#9966FF"))
       (jbeansa-blue-org     (if (display-graphic-p) "#00EAFF" "#00EAFF"))
       (jbeansa-green-org    (if (display-graphic-p) "#33FF55" "#33FF55"))
-      (jbeansa-green-powerline    (if (display-graphic-p) "#006655" "#006655"))
+      (jbeansa-green-powerline    (if (display-graphic-p) "#151515" "#151515"))
+      (jbeansa-green-powerline-main    (if (display-graphic-p) "#1D2022" "#1D2022"))
       (jbeansa-green-add-magit    (if (display-graphic-p) "#006655" "#006655"))
       (jbeansa-yellow-org   (if (display-graphic-p) "#ffff66" "#ffff66"))
       (jbeansa-orange-org   (if (display-graphic-p) "#FFBF66" "#FFBF66"))
       (jbeansa-red-org      (if (display-graphic-p) "#FF0055" "#FF0055"))
       (jbeansa-red-delete-magit      (if (display-graphic-p) "#660022" "#660022"))
+      (jbeansa-doom-modeline-active      (if (display-graphic-p) "#006655" "#006655"))
       )
 
       (custom-theme-set-variables
         'jbeansa
-        `(linum-format " %3i "))
 
+        `(linum-format " %3i "))
       (custom-theme-set-faces
        'jbeansa
        `(default                             ((,class (:foreground ,jbeansa-fg :background ,jbeansa-bg))))
@@ -157,7 +159,7 @@
        `(helm-grep-finish                    ((,class (:foreground ,jbeansa-blue-org))))
        `(helm-match                          ((,class (:foreground ,jbeansa-red-org :background ,jbeansa-bg))))
        `(helm-moccur-buffer                  ((,class (:foreground ,jbeansa-green-org))))
-       `(helm-selection                      ((,class (:background ,jbeansa-grey-3))))
+       `(helm-selection                      ((,class (:background ,jbeansa-grey-4))))
        `(helm-source-header                  ((,class (:foreground ,jbeansa-green-org :background ,jbeansa-grey-0))))
        `(helm-swoop-target-line-face         ((,class (:foreground ,jbeansa-fg :background ,jbeansa-grey-4))))
        `(helm-swoop-target-word-face         ((,class (:foreground ,jbeansa-red-org))))
@@ -165,8 +167,8 @@
        `(helm-ff-directory                   ((,class (:foreground ,jbeansa-blue-org))))
        `(helm-ff-executable                  ((,class (:foreground ,jbeansa-purple-org))))
 ;;;;; Highlight
-       `(highlight                           ((,class (:background ,jbeansa-grey-3))))
-       `(hl-line                             ((,class (:background ,jbeansa-purple-org))))
+       `(highlight                           ((,class (:foreground, jbeansa-bg :background ,jbeansa-fg))))
+       `(hl-line                             ((,class (:background ,jbeansa-bg))))
 ;;;;; iSearch
        `(isearch                             ((,class (:foreground ,jbeansa-fg :background ,jbeansa-red-org))))
        `(isearch-fail                        ((,class (:background ,jbeansa-red-org))))
@@ -205,8 +207,8 @@
        `(ediff-odd-diff-A                    ((,class (:background ,jbeansa-grey-2 :foreground ,jbeansa-fg))))
        `(ediff-odd-diff-B                    ((,class (:background ,jbeansa-grey-3 :foreground ,jbeansa-fg))))
        `(ediff-odd-diff-C                    ((,class (:background ,jbeansa-grey-5 :foreground ,jbeansa-fg))))
-       `(powerline-active1                   ((,class (:inherit mode-line :background ,jbeansa-grey-0))))
-       `(powerline-active2                   ((,class (:inherit mode-line :background ,jbeansa-green-powerline))))
+       `(powerline-active1                   ((,class (:inherit mode-line :background ,jbeansa-green-powerline))))
+       `(powerline-active2                   ((,class (:inherit mode-line :background ,jbeansa-grey-0))))
        `(powerline-inactive1                 ((,class (:inherit mode-line :background ,jbeansa-grey-0))))
        `(powerline-inactive2                 ((,class (:inherit mode-line :background ,jbeansa-grey-3))))
 ;;;;; flycheck
@@ -302,7 +304,7 @@
        `(magit-reflog-rebase                 ((,class (:foreground ,jbeansa-purple-org))))
        `(magit-reflog-remote                 ((,class (:foreground ,jbeansa-blue-org))))
        `(magit-reflog-reset                  ((,class (:foreground ,jbeansa-red-org))))
-       `(magit-refname                       ((,class (:background ,jbeansa-bg :foreground ,jbeansa-fg))))
+       `(magit-refname                       ((,class (:background ,jbeansa-bg :foreground ,jbeansa-green-org))))
        `(magit-refname-stash                 ((,class (:inherit magit-refname))))
        `(magit-refname-wip                   ((,class (:inherit magit-refname))))
        `(magit-section-heading               ((,class (:background ,jbeansa-bg :foreground ,jbeansa-grey-org))))
@@ -324,8 +326,8 @@
 ;;;;; Minibuffer
        `(minibuffer-prompt                   ((,class (:foreground ,jbeansa-green-org))))
 ;;;;; Modeline
-       `(mode-line                           ((,class (:foreground ,jbeansa-fg :background ,jbeansa-green-powerline))))
-       `(mode-line-inactive                  ((,class (:foreground ,jbeansa-grey-6 :background ,jbeansa-grey-2))))
+       `(mode-line                           ((,class (:foreground ,jbeansa-fg :background ,jbeansa-doom-modeline-active))))
+       `(mode-line-inactive                  ((,class (:foreground ,jbeansa-grey-6 :background ,jbeansa-green-powerline-main))))
 ;;;;; NeoTree
        `(neo-dir-link-face                   ((,class (:foreground ,jbeansa-blue-org))))
        `(neo-file-link-face                  ((,class (:foreground ,jbeansa-fg))))
@@ -343,7 +345,7 @@
        `(org-table                           ((,class (:foreground ,jbeansa-yellow-org))))
        `(org-todo                            ((,class (:foreground ,jbeansa-yellow-org))))
 ;;;;; Region
-       `(region                              ((,class (:background ,jbeansa-grey-3))))
+       `(region                              ((,class (:background ,jbeansa-grey-4))))
 ;;;;; SHM
        `(shm-current-face                    ((,class (:background ,jbeansa-grey-4))))
        `(shm-quarantine-face                 ((,class (:background ,jbeansa-red-org))))
@@ -400,7 +402,6 @@
        `(web-mode-variable-name-face         ((,class (:foreground ,jbeansa-blue-org))))
 ;;;;; More Whitespace
        `(whitespace-trailing                 ((,class (:background ,jbeansa-red-org))))))
-
 ;;;###autoload
 (when load-file-name
   (add-to-list 'custom-theme-load-path

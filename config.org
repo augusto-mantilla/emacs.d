@@ -1,8 +1,18 @@
-* Strarting
-** start up message
-#+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-message t)
-#+END_SRC
+* Starting
+** start up message 
+#+BEGIN_SRC emacs-lisp 
+(setq inhibit-startup-message t) 
+#+END_SRC 
+** Adjust font depending in the pixel density 
+#+begin_src emacs-lisp 
+  (defun my-font-adjustment () (interactive)
+		 (if (<= (face-attribute 'default :height) 115) (set-face-attribute 'default nil :height 130)
+		   (set-face-attribute 'default nil :height 100))) (global-set-key (kbd "C-c f") 'my-font-adjustment) 
+#+end_src 
+** Adding transparency to emacs 
+#+begin_src emacs-lisp 
+;;(set-frame-parameter (selected-frame) 'alpha '(85 . 50)) ;; (add-to-list 'default-frame-alist '(alpha . (85 . 50))) 
+#+end_src
 * Terminal
 ** Setting default shell to bash
 #+BEGIN_SRC emacs-lisp
@@ -14,8 +24,18 @@
 ** keybindig for ansi-term
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c t") 'ansi-term)
-(global-set-key (kbd "C-c s" ) 'eshell)
+(defun eshell-new()
+  "Open a new instance of eshell."
+  (interactive)
+  (eshell 'N))
+(global-set-key (kbd "C-c s" ) 'eshell-new)
+(require 'shell-switcher)
+(setq shell-switcher-mode t)
 #+END_SRC
+** emojify ansi-term
+#+begin_src emacs-lisp
+(add-hook 'after-init-hook #'global-emojify-mode)
+#+end_src
 * Bell
 ** Turn off bell
 #+BEGIN_SRC emacs-lisp
@@ -55,16 +75,13 @@
   (beacon-mode 1))
 #+END_SRC
 * org mode
-** bullets
-#+BEGIN_SRC emacs-lisp
-  (use-package org-bullets
-    :ensure t
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
-#+END_SRC
-** org export backends
-#+BEGIN_SRC emacs-lisp
-  (require 'ox-md)
+** bullets 
+#+BEGIN_SRC emacs-lisp 
+(use-package org-bullets :ensure t :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode)))) 
+#+END_SRC 
+** org export backends 
+#+BEGIN_SRC emacs-lisp 
+(require 'ox-md) 
 #+END_SRC
 * IDO
 ** install package
@@ -131,16 +148,16 @@
 #+END_SRC
 * Rainbow
 #+BEGIN_SRC emacs-lisp
-  (use-package rainbow-mode
-    :ensure t
-    :init (rainbow-mode 1))
+;  (use-package rainbow-mode
+ ;   :ensure t
+  ;  :init (rainbow-mode 1))
 #+END_SRC
 ** kds
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-delimiters
     :ensure t
     :init
-    (rainbow-delimiters-mode 1))
+    (rainbow-delimiters-mode 0))
 #+END_SRC
 * Switch-window
 #+BEGIN_SRC emacs-lisp
@@ -152,7 +169,7 @@
     (setq switch-window-threshold 2)
     (setq switch-window-shortcut-style 'qwerty)
     (setq switch-window-querty-shortcuts
-          '("a", "s", "d", "f", "j", "k", "l", "ç"))
+          '("a", "s", "d", "f", "j", "k", "l", ";"))
     :bind
     ([remap other-window] . switch-window))
 #+END_SRC
@@ -164,7 +181,7 @@
     (split-window-below)
     (balance-windows)
     (other-window 1))
-  (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+  (global-set-key (kbd "C-x y") 'split-and-follow-horizontally)
 #+END_SRC
 ** vertically
 #+BEGIN_SRC emacs-lisp
@@ -173,8 +190,18 @@
     (split-window-right)
     (balance-windows)
     (other-window 1))
-  (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+  (global-set-key (kbd "C-x x") 'split-and-follow-vertically)
 #+END_SRC
+** Close window
+   #+begin_src emacs-lisp
+   (global-set-key (kbd "C-x w") 'delete-window)
+   #+end_src
+* Following opened help
+  #+begin_src emacs-lisp
+(advice-add 'describe-mode :after '(lambda (&rest args) (call-interactively 'other-window)))
+(advice-add 'man :after '(lambda (&rest args) (call-interactively 'other-window)))
+(setq help-window-select t)
+  #+end_src
 * Minor settings
 ** Subword
 #+BEGIN_SRC emacs-lisp
@@ -188,6 +215,7 @@
                               (?\(. ?\))
                               (?\[. ?\])
                               (?\". ?\")
+			      (?\`. ?\`)
                               ))
   (electric-pair-mode t)
 #+END_SRC
@@ -226,15 +254,26 @@
 #+BEGIN_SRC emacs-lisp
   (use-package sudo-edit
     :ensure t
-    :bind ("C-M-ç" . sudo-edit))
+    :bind ("C-c v" . sudo-edit))
 #+END_SRC
 * Dashboard
 #+BEGIN_SRC emacs-lisp
-  (use-package dashboard
-    :ensure t
-    :config
-    (dashboard-setup-startup-hook)
-    (setq dashboard-items '((recents . 10))))
+	(use-package dashboard
+	  :ensure t
+	  :config
+	  (dashboard-setup-startup-hook)
+	  (setq dashboard-items '((recents . 10)
+	  (projects . 5)
+  )))
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+  (recentf-mode 1)
+  (setq dashboard-startup-banner 2)
+  (setq recentf-max-menu-items 25)
+  (setq recentf-max-saved-items 25)
+  (setq dashboard-set-footer nil)
+  (setq dashboard-set-file-icons t)
+  (add-hook 'kill-emacs-hook (lambda () (recentf-save-list)))
+  (global-set-key "\C-x\ \C-r" 'recentf-save-list)
 #+END_SRC
 * Org
 ** Basic config
@@ -253,27 +292,40 @@
 #+END_SRC
 ** Pretty-mode
 #+BEGIN_SRC emacs-lisp
-
   (require 'pretty-mode)
   (global-pretty-mode 0)
 #+END_SRC
+* Open urls
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c o") 'org-open-at-point)
+#+end_src
 * Auto completion
 ** auto-complete
 #+BEGIN_SRC emacs-lisp
-    (use-package auto-complete
-      :ensure t
-      :config
-      (require 'auto-complete)
-      (require 'auto-complete-config)
-      (ac-config-default)
-      )
-  (defun my:ac-c-header-init ()
-    (require 'auto-complete-c-headers)
-    (add-to-list 'ac-sources 'ac-source-c-headers)
-    (add-to-list 'achead:include-directories '"/usr/include")
-    (add-hook 'c++-mode-hook 'my:ac-c-header-init)
-    (add-hook 'c++-mode-hook 'my:ac-c-header-init))
+  ;;   (use-package auto-complete
+  ;;     :ensure t
+  ;;     :config
+  ;;     (require 'auto-complete)
+  ;;     (require 'auto-complete-config)
+  ;;     (ac-config-default)
+  ;;     )
+  ;; (defun my:ac-c-header-init ()
+  ;;   (require 'auto-complete-c-headers)
+  ;;   (add-to-list 'ac-sources 'ac-source-c-headers)
+  ;;   (add-to-list 'achead:include-directories '"/usr/include")
+  ;;   (add-hook 'c++-mode-hook 'my:ac-c-header-init)
+  ;;   (add-hook 'c++-mode-hook 'my:ac-c-header-init))
 #+END_SRC
+** Company
+#+begin_src emacs-lisp
+  (require 'company)
+  (require 'company-go)
+  (add-hook 'go-mode-hook (lambda ()
+							(set (make-local-variable 'company-backend) '(company-go))
+							(company-mode)))
+  (add-hook 'prog-mode-hook 'company-mode)
+  (add-hook 'completion-at-point-functions 'go-complete-at-point)
+#+end_src
 * Mode line
 ** spaceline
 #+BEGIN_SRC emacs-lisp
@@ -284,6 +336,26 @@
     (setq powerline-default-separator (quote arrow))
     (spaceline-spacemacs-theme))
 #+END_SRC
+** doom-modeline
+#+begin_src emacs-lisp 
+	(use-package doom-modeline
+	  :ensure t
+	  :init (doom-modeline-mode 1))
+
+#+end_src
+** all the icons
+#+begin_src emacs-lisp
+	(use-package all-the-icons
+	  :ensure t)
+	(use-package all-the-icons-ibuffer
+	:ensure t
+	:init (all-the-icons-ibuffer-mode 1)) 
+#+end_src
+*** Removes the color to the icons
+#+begin_src emacs-lisp
+(setq doom-modeline-major-mode-color-icon nil
+       all-the-icons-color-icons nil)
+#+end_src
 ** diminish
 #+BEGIN_SRC emacs-lisp
   (use-package diminish
@@ -298,13 +370,6 @@
 * tilde
 #+BEGIN_SRC emacs-lisp
    (require 'iso-transl)
-#+END_SRC
-* line numbers
-** for version >= 26.0
-#+BEGIN_SRC emacs-lisp
-  (when (version<= "26.0.50" emacs-version )
-    (global-display-line-numbers-mode))
-  (add-hook 'prog-mode-hook 'linum-mode)
 #+END_SRC
 * isearch
 #+BEGIN_SRC emacs-lisp
@@ -329,9 +394,11 @@
      'python-mode
      '(("\\<\\(\\sw+\\) ?(" 1 'font-lock-function-name-face)))
 #+END_SRC
-* preferd codification
+* preferred codification
 #+BEGIN_SRC emacs-lisp
+(set-default-coding-systems 'utf-8)
     (prefer-coding-system 'utf-8)
+	(set-fontset-font t '(#xE000 . #xffff) '("all-the-icons" . "iso10646-1"))
 #+END_SRC
 * Pdf tools
 #+BEGIN_SRC emacs-lisp
@@ -385,18 +452,29 @@
     :ensure t
     :init (global-flycheck-mode)
 )
+(add-hook 'prog-mode-hook (lambda ()
+(flyspell-prog-mode)))
+(add-hook 'org-mode-hook (lambda () (flyspell-mode)))
 #+END_SRC
 ** rust checker
 #+BEGIN_SRC emacs-lisp
 (with-eval-after-load 'rust-mode
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+
+(require 'rust-mode)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
 #+END_SRC
 * eviroment var
 #+BEGIN_SRC emacs-lisp
   (setenv "GOOGLE_CLIENT_ID" "608621652614-2qd9a4gbf7gq4eu9god80o8bnh9pm2qq.apps.googleusercontent.com")
   (setenv "GOOGLE_CLIENT_SECRET" "4-LZrLdA26_P5KkIdjky1HUI")
   (setenv "PATH" (concat (getenv "PATH") ":" "/home/augusto/go/bin"))
-#+END_SRC
+  (setenv "PATH" (concat (getenv "PATH") ":" "/home/augusto/.cargo/bin"))
+ #+END_SRC
 * JavaScript
 ** js2-mode
 #+BEGIN_SRC emacs-lisp
@@ -431,13 +509,18 @@
 
 (define-key js2-mode-map (kbd "C-k") #'js2r-kill)
 #+END_SRC
+* Tab width
+#+begin_src emacs-lisp
+(setq-default tab-width 4)
+#+end_src
 * Prettier
 #+begin_src emacs-lisp
   (require 'prettier-js)
   (add-hook 'js2-mode-hook 'prettier-js-mode)
   (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
   (setq prettier-js-args '(
-    "--tab-width 2"
+    "--tab-width"
+    "2"
     "--no-semi"
     "--single-quote"
   ))
@@ -445,6 +528,9 @@
 * Rust
 #+begin_src emacs-lisp
 (setq rust-format-on-save t)
+  (add-hook 'rust-mode-hook (lambda ()
+  (local-set-key (kbd "C-c C-k") 'pop-tag-mark)
+	    (local-set-key (kbd "C-c C-j") 'racer-find-definition)))
 #+end_src
 
 * flymd
@@ -482,4 +568,88 @@
 * Execution path
 #+begin_src emacs-lisp
   (setq exec-path (append exec-path '("/home/augusto/go/bin")))
+  (setq exec-path (append exec-path '("~/.cargo/bin")))
 #+end_src
+* Imenu
+#+begin_src emacs-lisp
+  (global-set-key (kbd "M-i") 'imenu)
+#+end_src
+* Linum
+#+begin_src emacs-lisp
+(add-hook 'prog-mode-hook 'linum-mode)
+'(linum-format " %3i ")
+#+end_src
+* Yalm mode
+#+begin_src emacs-lisp
+  (add-to-list 'load-path "~/.emacs-local-packages/yaml-mode")
+  (load "yaml-mode")
+  (require 'yaml-mode)
+  (add-to-list 'auto-mode-alist '("\\.yml?\\'". yaml-mode))
+  (add-hook 'yaml-mode-hook
+			'(lambda ()
+			   (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+#+end_src
+* Evil
+** General
+#+begin_src emacs-lisp
+	(use-package evil
+	  :ensure t
+	  :init
+	  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+	  (setq evil-want-keybinding nil)
+	  :config
+	  (evil-mode 1))
+
+	(use-package evil-collection
+	  :after evil
+	  :ensure t
+	  :config
+	  (evil-collection-init 'ibuffer)
+	  (evil-collection-init 'messages)
+	  (evil-collection-init 'custom))
+
+		(setq evil-want-fine-undo t)
+#+end_src
+** Surround text
+#+begin_src emacs-lisp
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode t))
+#+end_src
+** Cursor by state
+#+begin_src emacs-lisp
+(setq evil-mode-line-format nil
+evil-emacs-state-cursor '((hbar . 5) "#FFFFFF")
+			 evil-normal-state-cursor '(box "#FFFFFF")
+			 evil-insert-state-cursor '(hbar "#FFFFFF")
+			 evil-visual-state-cursor '(box "#FFFF66"))
+#+end_src
+** multiple cursor 
+#+begin_src emacs-lisp
+(require 'evil-mc)
+  (add-hook 'prog-mode-hook 'evil-mc-mode)
+  (add-hook 'org-mode-hook 'evil-mc-mode)
+#+end_src
+** Emacs initial state
+#+begin_src emacs-lisp 
+(evil-set-initial-state 'eshell-mode 'emacs)
+(evil-set-initial-state 'dashboard-mode 'emacs)
+(evil-set-initial-state 'term-mode 'emacs)
+#+end_src
+** Evil magit
+#+begin_src emacs-lisp
+(require 'evil-magit)
+#+end_src
+* Print working directory
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c p") 'pwd)
+#+end_src
+* Projectile
+  #+begin_src emacs-lisp
+  (use-package projectile
+:ensure t
+:config 
+(define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+(projectile-mode +1))
+  #+end_src
