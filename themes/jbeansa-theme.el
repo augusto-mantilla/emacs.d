@@ -40,31 +40,29 @@
       ;;                                            GUI       TER
       (jbeansa-fg         (if (display-graphic-p) "#ffffff" "#ffffff"))
       (jbeansa-bg         (if (display-graphic-p) "#000000" "#000000"))
-      (jbeansa-grey-0     (if (display-graphic-p) "#151515" "#151515"))
+      (jbeansa-grey-0     (if (display-graphic-p) "#202020" "#202020"))
       (jbeansa-grey-2     (if (display-graphic-p) "#050505" "#050505"))
       (jbeansa-grey-3     (if (display-graphic-p) "#333344" "#444455"))
       (jbeansa-grey-4     (if (display-graphic-p) "#363636" "#363636"))
       (jbeansa-grey-5     (if (display-graphic-p) "#444444" "#444444"))
       (jbeansa-grey-6     (if (display-graphic-p) "#666666" "#666666"))
       (jbeansa-grey-7     (if (display-graphic-p) "#888888" "#888888"))
-      (jbeansa-grey-org     (if (display-graphic-p) "#dddddd" "#dddddd"))
+      (jbeansa-grey-org     (if (display-graphic-p) "#DDDDDD" "#DDDDDD"))
       (jbeansa-purple-org   (if (display-graphic-p) "#9966FF" "#9966FF"))
       (jbeansa-blue-org     (if (display-graphic-p) "#00EAFF" "#00EAFF"))
       (jbeansa-green-org    (if (display-graphic-p) "#33FF55" "#33FF55"))
       (jbeansa-green-powerline    (if (display-graphic-p) "#151515" "#151515"))
-      (jbeansa-green-powerline-main    (if (display-graphic-p) "#1D2022" "#1D2022"))
+      (jbeansa-green-powerline-main    (if (display-graphic-p) "#202020" "#202020"))
       (jbeansa-green-add-magit    (if (display-graphic-p) "#006655" "#006655"))
       (jbeansa-yellow-org   (if (display-graphic-p) "#ffff66" "#ffff66"))
       (jbeansa-orange-org   (if (display-graphic-p) "#FFBF66" "#FFBF66"))
       (jbeansa-red-org      (if (display-graphic-p) "#FF0055" "#FF0055"))
       (jbeansa-red-delete-magit      (if (display-graphic-p) "#660022" "#660022"))
-      (jbeansa-doom-modeline-active      (if (display-graphic-p) "#006655" "#006655"))
+      (jbeansa-doom-modeline-active      (if (display-graphic-p) "#383838" "#383838"))
       )
 
       (custom-theme-set-variables
-        'jbeansa
-
-        `(linum-format " %3i "))
+        'jbeansa)
       (custom-theme-set-faces
        'jbeansa
        `(default                             ((,class (:foreground ,jbeansa-fg :background ,jbeansa-bg))))
@@ -168,16 +166,15 @@
        `(helm-ff-executable                  ((,class (:foreground ,jbeansa-purple-org))))
 ;;;;; Highlight
        `(highlight                           ((,class (:foreground, jbeansa-bg :background ,jbeansa-fg))))
-       `(hl-line                             ((,class (:background ,jbeansa-grey-4))))
+       `(hl-line                             ((,class (:background ,jbeansa-grey-0))))
 ;;;;; iSearch
        `(isearch                             ((,class (:foreground ,jbeansa-fg :background ,jbeansa-red-org))))
        `(isearch-fail                        ((,class (:background ,jbeansa-red-org))))
 ;;;;; Ido
-       `(ido-first-match                     ((,class (:foreground ,jbeansa-green-org))))
+       `(ido-first-match                     ((,class (:foreground ,jbeansa-blue-org))))
        `(ido-only-match                      ((,class (:foreground ,jbeansa-purple-org))))
        `(ido-subdir                          ((,class (:foreground ,jbeansa-fg))))
-       `(ido-virtual                         ((,class (:foreground
-                                                       ,jbeansa-blue-org))))
+       `(ido-virtual                         ((,class (:foreground ,jbeansa-blue-org))))
 ;;;;; Ivy
        `(ivy-current-match                   ((,class (:background ,jbeansa-grey-3))))
        `(ivy-minibuffer-match-face-1         ((,class (:foreground ,jbeansa-green-org))))
@@ -199,7 +196,7 @@
 ;;;;; Linum
        `(linum                               ((,class (:foreground ,jbeansa-grey-5 :background ,jbeansa-grey-2))))
 ;;;;; Display line numbers
-       `(line-number                         ((,class (:foreground ,jbeansa-grey-5 :background ,jbeansa-grey-2))))
+       `(line-number                         ((,class (:foreground ,jbeansa-grey-6 :background ,jbeansa-grey-2))))
 ;;;;; Ediff
        `(ediff-even-diff-A                   ((,class (:background ,jbeansa-grey-2 :foreground ,jbeansa-fg))))
        `(ediff-even-diff-B                   ((,class (:background ,jbeansa-grey-3 :foreground ,jbeansa-fg))))
@@ -324,20 +321,20 @@
 ;;;;; Match
        `(match                               ((,class (:background ,jbeansa-red-org))))
 ;;;;; Minibuffer
-       `(minibuffer-prompt                   ((,class (:foreground ,jbeansa-green-org))))
+       `(minibuffer-prompt                   ((,class (:foreground ,jbeansa-blue-org))))
 ;;;;; Modeline
        `(mode-line                           ((,class (:foreground ,jbeansa-fg :background ,jbeansa-doom-modeline-active))))
-       `(mode-line-inactive                  ((,class (:foreground ,jbeansa-grey-6 :background ,jbeansa-green-powerline-main))))
+       `(mode-line-inactive                  ((,class (:foreground ,jbeansa-grey-6 :background ,jbeansa-green-powerline-main ))))
 ;;;;; NeoTree
        `(neo-dir-link-face                   ((,class (:foreground ,jbeansa-blue-org))))
        `(neo-file-link-face                  ((,class (:foreground ,jbeansa-fg))))
 ;;;;; Org
-       `(org-checkbox                        ((,class (:foreground ,jbeansa-red-org))))
+       `(org-checkbox                        ((,class (:foreground ,jbeansa-green-org :weight bold))))
        `(org-date                            ((,class (:foreground ,jbeansa-blue-org))))
        `(org-document-title                  ((,class (:foreground ,jbeansa-red-org))))
        `(org-done                            ((,class (:foreground ,jbeansa-green-org))))
        `(org-level-1                         ((,class (:foreground ,jbeansa-purple-org :weight bold))))
-       `(org-level-2                         ((,class (:foreground ,jbeansa-grey-org :weight bold))))
+       `(org-level-2                         ((,class (:foreground ,jbeansa-blue-org :weight bold))))
        `(org-level-3                         ((,class (:foreground ,jbeansa-yellow-org))))
        `(org-level-4                         ((,class (:foreground ,jbeansa-green-org))))
        `(org-link                            ((,class (:foreground ,jbeansa-blue-org))))
@@ -345,7 +342,7 @@
        `(org-table                           ((,class (:foreground ,jbeansa-yellow-org))))
        `(org-todo                            ((,class (:foreground ,jbeansa-yellow-org))))
 ;;;;; Region
-       `(region                              ((,class (:background ,jbeansa-grey-4))))
+       `(region                              ((,class (:background ,jbeansa-grey-3))))
 ;;;;; SHM
        `(shm-current-face                    ((,class (:background ,jbeansa-grey-4))))
        `(shm-quarantine-face                 ((,class (:background ,jbeansa-red-org))))
@@ -359,8 +356,7 @@
        `(spaceline-evil-normal               ((,class (:foreground ,jbeansa-bg :background ,jbeansa-orange-org))))
        `(spaceline-evil-motion               ((,class (:foreground ,jbeansa-bg :background ,jbeansa-purple-org))))
        `(spaceline-evil-insert               ((,class (:foreground ,jbeansa-bg :background ,jbeansa-green-org))))
-       `(spaceline-evil-visual               ((,class (:foreground ,jbeansa-bg :background ,jbeansa-grey-5))))
-       `(spaceline-evil-replace              ((,class (:foreground ,jbeansa-bg :background ,jbeansa-blue-org))))
+       `(spaceline-evil-visual               ((,class (:foreground ,jbeansa-bg :background ,jbeansa-grey-5)))) `(spaceline-evil-replace              ((,class (:foreground ,jbeansa-bg :background ,jbeansa-blue-org))))
        `(spaceline-evil-emacs                ((,class (:foreground ,jbeansa-bg :background ,jbeansa-blue-org))))
 ;;;;; Spacemacs
        `(spacemacs-normal-face               ((,class (:foreground ,jbeansa-bg :background ,jbeansa-orange-org))))

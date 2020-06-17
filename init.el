@@ -17,10 +17,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(unless (package-installed-p 'abyss-theme)
- (package-refresh-contents)
- (package-install 'abyss-theme))
-
 ;;; This is the actual config file. It is omitted if it doesn't exist so emacs won't refuse to launch.
 (when (file-readable-p "~/.emacs.d/config.org")
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
@@ -39,19 +35,22 @@
  '(describe-char-unidata-list
    (quote
 	(name old-name general-category canonical-combining-class bidi-class decomposition decimal-digit-value digit-value numeric-value mirrored iso-10646-comment uppercase lowercase titlecase)))
- '(doom-modeline-bar-width 6)
+ '(doom-modeline-bar-width 3)
  '(doom-modeline-icon t)
  '(fringe-mode 10 nil (fringe))
  '(main-line-color1 "#222912")
  '(main-line-color2 "#09150F")
+ '(org-agenda-files
+   (quote
+	("~/Documents/rust_work/rust-piscine-solutions/README.org")))
+ '(org-bullets-bullet-list (quote ("◉")))
  '(package-selected-packages
    (quote
-	(ripgrep all-the-icons-ibuffer projectile evil-collection all-the-icons doom-modeline shell-switcher go-complete company-go company racer evil-magit evil-mc evil-surround org-evil evil emojify graphql-mode web-mode flymd json-mode pretty-mode xref-js2 js2-refactor js2-mode flycheck-rust rust-mode flycheck eshell-git-prompt multiple-cursors magit org-link-minor-mode org-pdfview pdf-tools diminish spaceline auto-complete dashboard sudo-edit hungry-delete switch-window rainbow-delimiters rainbow-mode avy smex org-bullets beacon which-key abyss-theme use-package)))
+	(expand-region org-bullets ivy ox-md markdown-mode ripgrep all-the-icons-ibuffer projectile evil-collection all-the-icons doom-modeline shell-switcher go-complete company-go company racer evil-mc evil-surround org-evil evil emojify graphql-mode web-mode flymd json-mode pretty-mode xref-js2 js2-refactor js2-mode flycheck-rust rust-mode flycheck magit org-link-minor-mode org-pdfview pdf-tools diminish dashboard sudo-edit hungry-delete switch-window rainbow-mode avy smex beacon which-key use-package)))
  '(pdf-view-midnight-colors (quote ("#FDF4C1" . "#282828")))
+ '(pomodoro-play-sounds nil)
  '(pos-tip-background-color "#36473A")
  '(pos-tip-foreground-color "#FFFFC8")
- '(powerline-color1 "#222912")
- '(powerline-color2 "#09150F")
  '(safe-local-variable-values
    (quote
 	((eval when
@@ -69,19 +68,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(doom-modeline-buffer-modified ((t (:inherit font-lock-type-face))))
+ '(doom-modeline-evil-emacs-state ((t (:inherit (font-lock-keyword-face bold)))))
+ '(doom-modeline-evil-insert-state ((t (:inherit (font-lock-builtin-face bold)))))
  '(doom-modeline-info ((t (:inherit (defaut bold)))))
  '(doom-modeline-project-dir ((t (:inherit (doom-modeline-info bold)))))
  '(font-lock-string-face ((((class color) (min-colors 89)) (:foreground "#9966FF"))))
+ '(italic ((t (:underline nil :slant italic))))
  '(js2-function-call ((t (:inherit font-lock-function-name-face))))
  '(js2-function-param ((t (:inherit font-lock-builtin-face))))
- '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face))))
- '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face))))
- '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face))))
- '(rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face))))
- '(rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face))))
- '(rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face))))
- '(rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face))))
- '(rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face))))
- '(rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face))))
- '(rainbow-delimiters-unmatched-face ((t (:inherit font-lock-warning-face)))))
+ '(line-number-current-line ((t (:inherit default :background "#383838"))))
+ '(which-key-key-face ((t (:inherit font-lock-variable-name-face)))))
 (put 'list-timers 'disabled nil)
