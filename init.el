@@ -26,6 +26,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(all-the-icons-color-icons nil)
+ '(all-the-icons-ibuffer-color-icon nil)
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
  '(custom-enabled-themes (quote (jbeansa)))
@@ -35,18 +37,20 @@
  '(describe-char-unidata-list
    (quote
 	(name old-name general-category canonical-combining-class bidi-class decomposition decimal-digit-value digit-value numeric-value mirrored iso-10646-comment uppercase lowercase titlecase)))
- '(doom-modeline-bar-width 3)
- '(doom-modeline-icon t)
+ '(emojify-composed-text-p nil)
+ '(emojify-display-style (quote image))
+ '(emojify-emoji-styles (quote (unicode)))
+ '(flycheck-keymap-prefix "f")
  '(fringe-mode 10 nil (fringe))
  '(main-line-color1 "#222912")
  '(main-line-color2 "#09150F")
  '(org-agenda-files
    (quote
 	("~/Documents/rust_work/rust-piscine-solutions/README.org")))
- '(org-bullets-bullet-list (quote ("◉")))
+ '(org-bullets-bullet-list (quote ("*")))
  '(package-selected-packages
    (quote
-	(expand-region org-bullets ivy ox-md markdown-mode ripgrep all-the-icons-ibuffer projectile evil-collection all-the-icons doom-modeline shell-switcher go-complete company-go company racer evil-mc evil-surround org-evil evil emojify graphql-mode web-mode flymd json-mode pretty-mode xref-js2 js2-refactor js2-mode flycheck-rust rust-mode flycheck magit org-link-minor-mode org-pdfview pdf-tools diminish dashboard sudo-edit hungry-delete switch-window rainbow-mode avy smex beacon which-key use-package)))
+	(arduino-mode prettier-js expand-region org-bullets ivy ox-md markdown-mode ripgrep all-the-icons-ibuffer projectile evil-collection all-the-icons shell-switcher go-complete company-go company racer evil-mc evil-surround org-evil evil emojify graphql-mode web-mode flymd json-mode pretty-mode xref-js2 js2-refactor js2-mode flycheck-rust rust-mode flycheck magit org-link-minor-mode org-pdfview pdf-tools diminish dashboard sudo-edit hungry-delete switch-window rainbow-mode avy smex beacon which-key use-package)))
  '(pdf-view-midnight-colors (quote ("#FDF4C1" . "#282828")))
  '(pomodoro-play-sounds nil)
  '(pos-tip-background-color "#36473A")
@@ -68,15 +72,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(doom-modeline-buffer-modified ((t (:inherit font-lock-type-face))))
- '(doom-modeline-evil-emacs-state ((t (:inherit (font-lock-keyword-face bold)))))
- '(doom-modeline-evil-insert-state ((t (:inherit (font-lock-builtin-face bold)))))
- '(doom-modeline-info ((t (:inherit (defaut bold)))))
- '(doom-modeline-project-dir ((t (:inherit (doom-modeline-info bold)))))
+ '(font-lock-negation-char-face ((t (:inherit font-lock-warning-face))))
  '(font-lock-string-face ((((class color) (min-colors 89)) (:foreground "#9966FF"))))
  '(italic ((t (:underline nil :slant italic))))
- '(js2-function-call ((t (:inherit font-lock-function-name-face))))
- '(js2-function-param ((t (:inherit font-lock-builtin-face))))
  '(line-number-current-line ((t (:inherit default :background "#383838"))))
+ '(rust-question-mark-face ((t (:inherit font-lock-string-face :weight bold))))
  '(which-key-key-face ((t (:inherit font-lock-variable-name-face)))))
 (put 'list-timers 'disabled nil)

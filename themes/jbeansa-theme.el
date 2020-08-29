@@ -323,8 +323,9 @@
 ;;;;; Minibuffer
        `(minibuffer-prompt                   ((,class (:foreground ,jbeansa-blue-org))))
 ;;;;; Modeline
-       `(mode-line                           ((,class (:foreground ,jbeansa-fg :background ,jbeansa-doom-modeline-active))))
-       `(mode-line-inactive                  ((,class (:foreground ,jbeansa-grey-6 :background ,jbeansa-green-powerline-main ))))
+       `(mode-line                           ((,class (:foreground ,jbeansa-fg
+                                                                   :background ,jbeansa-doom-modeline-active :box (:line-width 1 :color ,jbeansa-grey-5)))))
+       `(mode-line-inactive                  ((,class (:foreground ,jbeansa-grey-6 :background ,jbeansa-green-powerline-main :box (:line-width 1 :color ,jbeansa-grey-6)))))
 ;;;;; NeoTree
        `(neo-dir-link-face                   ((,class (:foreground ,jbeansa-blue-org))))
        `(neo-file-link-face                  ((,class (:foreground ,jbeansa-fg))))

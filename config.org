@@ -2,10 +2,7 @@
   #+begin_src emacs-lisp
 	(define-prefix-command 'my-keys)
 	(global-set-key (kbd "C-c m") my-keys)
-	(define-prefix-command 'my-flycheck)
-	(global-set-key (kbd "C-c f") my-flycheck)
-	(define-key my-flycheck "n" 'flycheck-next-error)
-	(define-key my-flycheck "p" 'flycheck-previous-error)
+	(define-key my-keys "i" (lambda ()(interactive) (org-insert-structure-template "src") ))
  #+end_src
 ** Change C-f and C-b to scroll half a page
 * Start up
@@ -16,8 +13,8 @@
 ** Adjust font depending in the pixel density 
 #+begin_src emacs-lisp 
   (defun my-font-adjustment () (interactive)
-		 (if (<= (face-attribute 'default :height) 120) (set-face-attribute 'default nil :height 130)
-		   (set-face-attribute 'default nil :height 110)))
+		 (if (<= (face-attribute 'default :height) 120) (set-face-attribute 'default nil :height 125)
+		   (set-face-attribute 'default nil :height 100)))
   (global-set-key (kbd "C-c m f") 'my-font-adjustment) 
 #+end_src 
 ** Adding transparency to Emacs 
@@ -38,7 +35,7 @@
   #+end_src
 * Save session
   #+begin_src emacs-lisp
-	(desktop-save-mode 1)
+	(desktop-save-mode 0)
   #+end_src
 * Terminal
 ** Setting default shell to bash
@@ -57,10 +54,6 @@
 	:bind ("<C-iso-lefttab>" . 'shell-switcher-switch-buffer-other-window)
 	("<C-M-tab>" . 'shell-switcher-new-shell))
 #+END_SRC
-** emojify ansi-term
-#+begin_src emacs-lisp
-(add-hook 'after-init-hook #'global-emojify-mode)
-#+end_src
 * Bell
 ** Turn off bell
 #+BEGIN_SRC emacs-lisp
@@ -114,6 +107,7 @@
 #+END_SRC
 ** Basic config
 #+BEGIN_SRC emacs-lisp
+  (require 'org-tempo)
   (add-to-list 'org-structure-template-alist
 			   '("el" . "emacs-lisp"))
   (require 'ox-latex)
@@ -143,6 +137,7 @@
     :ensure t
     :init (smex-initialize)
     :bind
+	("<menu>" . smex)
     ("M-x" . smex))
 #+END_SRC
 ** Switch buffers
@@ -150,7 +145,7 @@
   (global-set-key (kbd "C-x C-f") 'ido-find-file)
   (global-set-key (kbd "C-x C-t") 'ido-find-file-other-window)
   (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
-  (global-set-key (kbd "C-x C-a") 'ido-switch-buffer-other-window)
+  (global-set-key (kbd "C-x a") 'ido-switch-buffer-other-window)
 #+END_SRC
 * Buffers
 ** enable buffer
@@ -192,7 +187,7 @@
 #+BEGIN_SRC emacs-lisp
   (defun  config-visit ()
     (interactive)
-    (find-file "~/.emacs.d/config.org"))
+    (find-file-other-window "~/.emacs.d/config.org"))
 	(define-key my-keys "e" 'config-visit)
 #+End_SRC
 ** reload
@@ -302,14 +297,17 @@
 #+END_SRC
 * Dashboard
 #+BEGIN_SRC emacs-lisp
-	(use-package dashboard
-	  :ensure t
-	  :config
-	  (dashboard-setup-startup-hook)
-	  (setq dashboard-items '((recents . 10)
-	  (projects . 5))))
+  (use-package dashboard
+	:ensure t
+	:config
+	(setq dashboard-items '((recents . 10)
+							(projects . 5))))
 
-  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+  (setq initial-buffer-choice (lambda ()
+								(org-agenda-list)
+								(delete-other-windows)
+								(get-buffer "*Org Agenda*")))    
+
   (recentf-mode 1)
   (setq dashboard-startup-banner 2)
   (setq recentf-max-menu-items 25)
@@ -342,12 +340,12 @@
 	(add-hook 'completion-at-point-functions 'go-complete-at-point))
 #+end_src
 * Mode line
-** Doom-Modeline
-#+begin_src emacs-lisp 
-	  (use-package doom-modeline
-		:ensure t
-		:init (doom-modeline-mode 1))
-#+end_src
+** Format
+   #+begin_src emacs-lisp
+	 (setq-default mode-line-format '("%e" mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification evil-mode-line-tag "   " mode-line-position 
+	  (vc-mode vc-mode)
+	  "  " mode-line-modes mode-line-end-spaces))
+   #+end_src
 ** All the icons
 #+begin_src emacs-lisp
 	(use-package all-the-icons
@@ -355,11 +353,6 @@
 	(use-package all-the-icons-ibuffer
 	:ensure t
 	:init (all-the-icons-ibuffer-mode 1)) 
-#+end_src
-*** Removes the color to the icons
-#+begin_src emacs-lisp
-(setq doom-modeline-major-mode-color-icon nil
-       all-the-icons-color-icons nil)
 #+end_src
 ** Diminish
 #+BEGIN_SRC emacs-lisp
@@ -411,7 +404,7 @@
 #+BEGIN_SRC emacs-lisp
 (set-default-coding-systems 'utf-8)
     (prefer-coding-system 'utf-8)
-	(set-fontset-font t '(#xE000 . #xffff) '("all-the-icons" . "iso10646-1"))
+	(set-fontset-font t '(#x1000 . #xf000) '("all-the-icons" . "iso10646-1"))
 #+END_SRC
 * Pdf tools
 #+BEGIN_SRC emacs-lisp
@@ -485,57 +478,27 @@
   (setenv "PATH" (concat (getenv "PATH") ":" "/home/augusto/.cargo/bin"))
  #+END_SRC
 * JavaScript
-** js2-mode
-#+BEGIN_SRC emacs-lisp
-  ;;;Commentary: JS2 mode
-
-  (require 'js2-mode)
-  (add-to-list 'auto-mode-alist '("\\.js\\'". js2-mode))
-  (add-to-list 'auto-mode-alist '("\\.json\\'". js2-mode))
-
-
-  ;;Better imenu
-  (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
-  (setq js2-mode-show-parse-errors nil)
-  (setq js2-mode-show-strict-warnings nil)
-
 #+END_SRC
-** js2-refactor & xref-refactor
-#+BEGIN_SRC emacs-lisp
-  (require 'js2-refactor)
-  (require 'xref-js2)
-
-  (add-hook 'js2-mode-hook #'js2-refactor-mode)
-  (js2r-add-keybindings-with-prefix "C-c C-r")
-  (define-key js2-mode-map (kbd "C-k") #'js2r-kill)
-
-  ;; js-mode (which js2 is based on) binds "M-." which conflicts with xref, so
-  ;; unbind it.
-  (define-key js-mode-map (kbd "M-.") nil)
-
-  (add-hook 'js2-mode-hook (lambda ()
-    (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
-
-(define-key js2-mode-map (kbd "C-k") #'js2r-kill)
-#+END_SRC
-* Prettier
-#+begin_src emacs-lisp
-  (require 'prettier-js)
-  (add-hook 'js2-mode-hook 'prettier-js-mode)
-  (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
-  (setq prettier-js-args '(
-    "--tab-width"
-    "2"
-    "--no-semi"
-    "--single-quote"
-  ))
-#+end_src
+** Prettier
+ #+begin_src emacs-lisp
+   (use-package prettier-js
+	 :ensure t
+	 :config 
+   (add-hook 'js2-mode-hook 'prettier-js-mode)
+   (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
+   (setq prettier-js-args '(
+	 "--tab-width"
+	 "2"
+	 "--no-semi"
+	 "--single-quote"
+   )))
+ #+end_src
 * Rust
 #+begin_src emacs-lisp
-(setq rust-format-on-save t)
-  (add-hook 'rust-mode-hook (lambda ()
-  (local-set-key (kbd "C-c C-k") 'pop-tag-mark)
-	    (local-set-key (kbd "C-c C-j") 'racer-find-definition)))
+  (setq rust-format-on-save t)
+	(add-hook 'rust-mode-hook (lambda ()
+	(local-set-key (kbd "C-c C-k") 'pop-tag-mark)
+		  (local-set-key (kbd "C-c C-j") 'racer-find-definition-other-window)))
 #+end_src
 * flymd
 #+begin_src emacs-lisp
@@ -589,8 +552,7 @@
 #+begin_src emacs-lisp
 	(use-package evil
 	  :ensure t
-	  :init
-	  (setq evil-want-keybinding nil)
+	  :init (setq evil-want-keybinding nil)
 	  :config
 	  (evil-mode 1)
 	 (evil-global-set-key 'normal "\C-f" 'evil-scroll-down)
@@ -601,6 +563,7 @@
 	  :ensure t
 	  :config
 	  (evil-collection-init 'ibuffer)
+	  (evil-collection-init 'calendar)
 	  (evil-collection-init 'messages)
 	  (evil-collection-init 'custom))
 
@@ -615,8 +578,7 @@
 #+end_src
 ** Cursor by state
 #+begin_src emacs-lisp
-(setq evil-mode-line-format nil
-evil-emacs-state-cursor '(box "#00EAFF")
+(setq evil-emacs-state-cursor '(box "#00EAFF")
 			 evil-normal-state-cursor '(box "#FFFFFF")
 			 evil-insert-state-cursor '(hbar "#FFFFFF")
 			 evil-visual-state-cursor '(box "#999999"))
@@ -653,12 +615,6 @@ evil-emacs-state-cursor '(box "#00EAFF")
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 #+end_src
-* Pomodoro timer
-  #+begin_src emacs-lisp
-	(add-to-list 'load-path "~/.emacs-local-packages/pomodoro.el")
-	  (require 'pomodoro)
-	  (pomodoro-add-to-mode-line)
-  #+end_src
 * Highlight the current line in the buffer
 #+begin_src emacs-lisp
   (add-hook 'org-mode-hook 'hl-line-mode)
@@ -725,3 +681,9 @@ evil-emacs-state-cursor '(box "#00EAFF")
   #+begin_src emacs-lisp
 	(evil-global-set-key 'visual (kbd "TAB" ) 'indent-region)
   #+end_src
+* Emojify
+  #+begin_src emacs-lisp
+	(use-package emojify
+	  :ensure t
+	  :config (add-hook 'after-init-hook #'global-emojify-mode))
+  #+end_src 
