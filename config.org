@@ -13,7 +13,7 @@
 ** Adjust font depending in the pixel density 
 #+begin_src emacs-lisp 
   (defun my-font-adjustment () (interactive)
-		 (if (<= (face-attribute 'default :height) 120) (set-face-attribute 'default nil :height 125)
+		 (if (<= (face-attribute 'default :height) 110) (set-face-attribute 'default nil :height 115)
 		   (set-face-attribute 'default nil :height 100)))
   (global-set-key (kbd "C-c m f") 'my-font-adjustment) 
 #+end_src 
@@ -82,8 +82,8 @@
   (use-package which-key
 	:ensure t
 	:init
-	(which-key-mode)
-	:config (which-key-setup-minibuffer))
+	(which-key-mode))
+;;:config (which-key-setup-minibuffer)
 #+END_SRC
 * Beacon
 ** package
@@ -339,6 +339,10 @@
 	(add-hook 'prog-mode-hook 'company-mode)
 	(add-hook 'completion-at-point-functions 'go-complete-at-point))
 #+end_src
+* Compilation
+#+begin_src emacs-lisp
+	(global-set-key (kbd "C-c c") 'compile)
+#+end_src
 * Mode line
 ** Format
    #+begin_src emacs-lisp
@@ -422,7 +426,6 @@
 #+BEGIN_SRC emacs-lisp
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save)
-  (global-set-key (kbd "C-c m c") 'compile)
 #+END_SRC
 ** remove unused imports
 #+BEGIN_SRC emacs-lisp
@@ -432,7 +435,8 @@
 ** go to imports
 #+BEGIN_SRC emacs-lisp
   (add-hook 'go-mode-hook (lambda ()
-	    (local-set-key (kbd "C-c i") 'go-goto-imports)))
+							(local-set-key (kbd "C-c C-k") 'pop-tag-mark)
+							(local-set-key (kbd "C-c i") 'go-goto-imports)))
 #+END_SRC
 * Custom theme
 #+BEGIN_SRC emacs-lisp
@@ -474,8 +478,8 @@
 #+end_src
 * Environment var
 #+BEGIN_SRC emacs-lisp
-  (setenv "PATH" (concat (getenv "PATH") ":" "/home/augusto/go/bin"))
-  (setenv "PATH" (concat (getenv "PATH") ":" "/home/augusto/.cargo/bin"))
+  (setenv "PATH" (concat (getenv "PATH") ":" "~/go/bin"))
+  (setenv "PATH" (concat (getenv "PATH") ":" "~/.cargo/bin"))
  #+END_SRC
 * JavaScript
 #+END_SRC
@@ -495,10 +499,16 @@
  #+end_src
 * Rust
 #+begin_src emacs-lisp
-  (setq rust-format-on-save t)
+	(use-package cargo
+	  :init
+	  (add-hook 'rust-mode-hook 'cargo-minor-mode)
+	  (add-hook 'toml-mode-hook 'cargo-minor-mode))
+
+	(setq rust-format-on-save t)
 	(add-hook 'rust-mode-hook (lambda ()
-	(local-set-key (kbd "C-c C-k") 'pop-tag-mark)
-		  (local-set-key (kbd "C-c C-j") 'racer-find-definition-other-window)))
+								(local-set-key (kbd "C-c C-k") 'pop-tag-mark)
+								(local-set-key (kbd "C-c C-j") 'racer-find-definition)
+								(local-set-key (kbd "C-c C-h") 'racer-find-definition-other-window)))
 #+end_src
 * flymd
 #+begin_src emacs-lisp
@@ -509,16 +519,16 @@
 #+end_src
 * web-mode
 #+BEGIN_SRC emacs-lisp
-	(defun my-web-mode-hook ()
-	  "Hooks for Web mode."
-	  (setq web-mode-markup-indent-offset 2))
+  (defun my-web-mode-hook ()
+	"Hooks for Web mode."
+	(setq web-mode-markup-indent-offset 2))
 
-	(use-package web-mode
-	  :ensure t
-	  :config
-	  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-	  (add-hook 'web-mode-hook  'my-web-mode-hook)
-	  (add-hook 'web-mode-hook 'prettier-js-mode))
+  (use-package web-mode
+	:ensure t
+	:config
+	(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+	(add-hook 'web-mode-hook  'my-web-mode-hook)
+	(add-hook 'web-mode-hook 'prettier-js-mode))
 #+END_SRC
 * Auto fill mode
 #+begin_src emacs-lisp
@@ -651,9 +661,7 @@
 			 "j" 'evil-yank
 			 "J" 'evil-yank-line
 			 "h" 'evil-search-next
-			 "H" 'evil-search-previous
-			 "}" 'end-of-defun
-			 "{" 'beginning-of-defun))
+			 "H" 'evil-search-previous))
 	(global-set-key (kbd "C-c m w") 'activate-workman)
 
 	(defun desactivate-workman () (interactive)
@@ -670,12 +678,12 @@
 			 "y" 'evil-yank
 			 "Y" 'evil-yank-line
 			 "n" 'evil-search-next
-			 "N" 'evil-search-previous
-			 "}" 'end-of-defun
-			 "{" 'beginning-of-defun))
+			 "N" 'evil-search-previous))
 	(global-set-key (kbd "C-c m q") 'desactivate-workman)
 
-	(add-hook 'after-init-hook 'activate-workman)
+	(evil-define-key '(normal visual operator motion) 'global
+	  "{" 'beginning-of-defun
+	  "}" 'end-of-defun)
   #+end_src
 * indent region
   #+begin_src emacs-lisp
@@ -687,3 +695,25 @@
 	  :ensure t
 	  :config (add-hook 'after-init-hook #'global-emojify-mode))
   #+end_src 
+* Eshell
+** Prompt
+   #+begin_src emacs-lisp
+	 (defun abbreviate-path (path)
+	   (if (string= path "/") "/"
+		 (car (last (split-string path "/")))))
+
+	 (setq eshell-prompt-function
+		   (lambda ()
+			 (concat
+			  (abbreviate-path (abbreviate-file-name ( eshell/pwd)))
+			  (if (= (user-uid) 0) " # " " $ "))))
+   #+end_src
+** Clear buffer
+   #+begin_src emacs-lisp
+	 (add-hook 'eshell-mode-hook
+				 (lambda () (local-set-key (kbd "C-l")
+								(lambda ()
+								  (interactive)
+								  (eshell/clear 1)
+								  (eshell-emit-prompt)))))
+   #+end_src
