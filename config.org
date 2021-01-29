@@ -3,6 +3,8 @@
 	(define-prefix-command 'my-keys)
 	(global-set-key (kbd "C-c m") my-keys)
 	(define-key my-keys "i" (lambda ()(interactive) (org-insert-structure-template "src") ))
+	(define-key my-keys "a" 'org-agenda)
+	(define-key my-keys "c" 'org-schedule)
  #+end_src
 ** Change C-f and C-b to scroll half a page
 * Start up
@@ -13,8 +15,8 @@
 ** Adjust font depending in the pixel density 
 #+begin_src emacs-lisp 
   (defun my-font-adjustment () (interactive)
-		 (if (<= (face-attribute 'default :height) 110) (set-face-attribute 'default nil :height 115)
-		   (set-face-attribute 'default nil :height 100)))
+		 (if (<= (face-attribute 'default :height) 98) (set-face-attribute 'default nil :height 100)
+		   (set-face-attribute 'default nil :height 95)))
   (global-set-key (kbd "C-c m f") 'my-font-adjustment) 
 #+end_src 
 ** Adding transparency to Emacs 
@@ -82,8 +84,8 @@
   (use-package which-key
 	:ensure t
 	:init
-	(which-key-mode))
-;;:config (which-key-setup-minibuffer)
+	(which-key-mode)
+	:config (which-key-setup-side-window-bottom))
 #+END_SRC
 * Beacon
 ** package
@@ -96,10 +98,11 @@
 * Org mode
 ** bullets 
 #+BEGIN_SRC emacs-lisp 
-  (use-package org-bullets
-	:ensure t
-	:config
-	(add-hook 'org-mode-hook (lambda () (org-bullets-mode)))) 
+	(use-package org-bullets
+	  :ensure t
+	  :config
+	  (add-hook 'org-mode-hook (lambda () (org-bullets-mode)))
+  ) 
 #+END_SRC 
 ** org export backends 
 #+BEGIN_SRC emacs-lisp 
@@ -122,6 +125,8 @@
 #+BEGIN_SRC emacs-lisp
   (require 'pretty-mode)
   (global-pretty-mode 0)
+;;(setq org-hide-emphasis-markers nil)
+(setq org-agenda-files '("~/Documents/agenda/agenda.org"))
 #+END_SRC
 * Ido
 ** Install package
@@ -145,7 +150,7 @@
   (global-set-key (kbd "C-x C-f") 'ido-find-file)
   (global-set-key (kbd "C-x C-t") 'ido-find-file-other-window)
   (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
-  (global-set-key (kbd "C-x a") 'ido-switch-buffer-other-window)
+  (global-set-key (kbd "C-x C-a") 'ido-switch-buffer-other-window)
 #+END_SRC
 * Buffers
 ** enable buffer
@@ -200,15 +205,16 @@
 #+END_SRC
 * Rainbow
 #+BEGIN_SRC emacs-lisp
-  (use-package rainbow-mode
-	:ensure t)
+	(use-package rainbow-mode
+	  :ensure t
+  :diminish rainbow-mode)
 #+END_SRC
 * Switch-window
 #+BEGIN_SRC emacs-lisp
   (use-package switch-window
     :ensure t
     :config
-    (setq switch-window-input-style 'minibuffer)
+    ;;(setq switch-window-input-style 'minibuffer)
     (setq switch-window-increase 4)
     (setq switch-window-threshold 2)
     (setq switch-window-shortcut-style 'qwerty)
@@ -272,10 +278,11 @@
 #+END_SRC
 ** Hungry Delete
 #+BEGIN_SRC emacs-lisp
-  (use-package hungry-delete
-    :ensure t
-    :config
-    (global-hungry-delete-mode))
+	(use-package hungry-delete
+	  :ensure t
+	  :config
+	  (global-hungry-delete-mode)
+  :diminish hungry-delete)
 #+END_SRC
 ** Tab width
 #+begin_src emacs-lisp
@@ -343,13 +350,6 @@
 #+begin_src emacs-lisp
 	(global-set-key (kbd "C-c c") 'compile)
 #+end_src
-* Mode line
-** Format
-   #+begin_src emacs-lisp
-	 (setq-default mode-line-format '("%e" mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification evil-mode-line-tag "   " mode-line-position 
-	  (vc-mode vc-mode)
-	  "  " mode-line-modes mode-line-end-spaces))
-   #+end_src
 ** All the icons
 #+begin_src emacs-lisp
 	(use-package all-the-icons
@@ -360,26 +360,24 @@
 #+end_src
 ** Diminish
 #+BEGIN_SRC emacs-lisp
-  (use-package diminish
-    :ensure t
-    :init
-    (diminish 'hungry-delete-mode)
-    (diminish 'beacon-mode)
-    (diminish 'which-key-mode)
-    (diminish 'subword-mode)
-    (diminish 'projectile-mode)
-    (diminish 'flycheck-mode)
-    (diminish 'flyspell-mode)
-    (diminish 'eldoc-mode)
-    (diminish 'auto-fill-mode)
-    (diminish 'evil-mc-mode)
-    (diminish 'company-mode)
-    (diminish 'racer-mode)
-    (diminish 'racer-mode)
-    (diminish 'ivy-mode)
-	(diminish 'auto-revert-mode)
-	(diminish 'undo-tree-mode)
-    (diminish 'rainbow-mode))
+	(use-package diminish
+	  :ensure t
+	  :config
+	  (diminish 'hungry-delete-mode)
+	  (diminish 'beacon-mode)
+	  (diminish 'which-key-mode)
+	  (diminish 'subword-mode)
+	  (diminish 'projectile-mode)
+	  (diminish 'flycheck-mode)
+	  (diminish 'flyspell-mode)
+	  (diminish 'eldoc-mode)
+	  (diminish 'auto-fill-mode)
+	  (diminish 'company-mode)
+	  (diminish 'racer-mode)
+	  (diminish 'ivy-mode)
+	  (diminish 'auto-revert-mode)
+	  (diminish 'undo-tree-mode)
+	  (diminish 'rainbow-mode))
 #+END_SRC
 * Isearch
 #+BEGIN_SRC emacs-lisp
@@ -414,14 +412,10 @@
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
   :ensure t)
+
   (use-package org-pdfview
   :ensure t)
-
-  (require 'pdf-tools)
-  (require 'org-pdfview)
-
 #+END_SRC
-
 * Golang
 #+BEGIN_SRC emacs-lisp
   (setq gofmt-command "goimports")
@@ -454,7 +448,9 @@
 #+BEGIN_SRC emacs-lisp
 	(use-package flycheck
 	  :ensure t
-	  :config (add-hook 'prog-mode-hook 'flycheck-mode))
+	  :config (add-hook 'prog-mode-hook 'flycheck-mode)
+	  :diminish flycheck-mode)
+
 #+END_SRC
 ** rust checker
 #+BEGIN_SRC emacs-lisp
@@ -466,15 +462,19 @@
 
   (with-eval-after-load 'rust-mode
 	(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'racer-mode-hook #'eldoc-mode)
   (add-hook 'racer-mode-hook #'company-mode)
 #+END_SRC
 * Flyspell
 #+begin_src emacs-lisp
-	  (add-hook 'prog-mode-hook (lambda ()
-								  (flyspell-prog-mode)))
-	  (add-hook 'org-mode-hook (lambda () (flyspell-mode)))
+  (add-hook 'prog-mode-hook (lambda ()
+							  (flyspell-prog-mode)))
+
+  (add-hook 'org-mode-hook (lambda () (flyspell-mode)))
+
+  (diminish 'flyspell-mode)
 #+end_src
 * Environment var
 #+BEGIN_SRC emacs-lisp
@@ -499,16 +499,18 @@
  #+end_src
 * Rust
 #+begin_src emacs-lisp
-	(use-package cargo
-	  :init
-	  (add-hook 'rust-mode-hook 'cargo-minor-mode)
-	  (add-hook 'toml-mode-hook 'cargo-minor-mode))
+  (use-package cargo
+	:init
+	(add-hook 'rust-mode-hook 'cargo-minor-mode)
+	(add-hook 'toml-mode-hook 'cargo-minor-mode)
+	:diminish cargo-minor-mode)
 
-	(setq rust-format-on-save t)
-	(add-hook 'rust-mode-hook (lambda ()
-								(local-set-key (kbd "C-c C-k") 'pop-tag-mark)
-								(local-set-key (kbd "C-c C-j") 'racer-find-definition)
-								(local-set-key (kbd "C-c C-h") 'racer-find-definition-other-window)))
+  (setq rust-format-on-save t)
+  (add-hook 'rust-mode-hook (lambda ()
+							  (local-set-key (kbd "C-c C-k") 'pop-tag-mark)
+							  (local-set-key (kbd "C-c C-j") 'racer-find-definition)
+							  (local-set-key (kbd "C-c C-h") 'racer-find-definition-other-window)))
+  (diminish 'racer-mode)
 #+end_src
 * flymd
 #+begin_src emacs-lisp
@@ -536,6 +538,7 @@
 	(setq-local comment-auto-fill-only-comments t)
 	(auto-fill-mode 1))
   (add-hook 'prog-mode-hook 'comment-auto-fill)
+  (add-hook 'prog-mode-hook (lambda () (diminish 'auto-fill-function)))
 #+end_src
 * Execution path
 #+begin_src emacs-lisp
@@ -544,8 +547,24 @@
 #+end_src
 * Line numbers 
 #+begin_src emacs-lisp
-(setq display-line-numbers-type 'relative)
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  (setq display-line-numbers-type 'relative)
+
+  (global-display-line-numbers-mode)
+
+  (defcustom display-line-numbers-exempt-modes '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode)
+	"Major modes on which to disable the linum mode, exempts them from global requirement"
+	:group 'display-line-numbers
+	:type 'list
+	:version "green")
+
+  (defun display-line-numbers--turn-on ()
+	"turn on line numbers but excempting certain majore modes defined in `display-line-numbers-exempt-modes'"
+	(if (and
+		 (not (member major-mode display-line-numbers-exempt-modes))
+		 (not (minibufferp)))
+		(display-line-numbers-mode)))
+
+  (global-display-line-numbers-mode)
 #+end_src
 * Yalm mode
 #+begin_src emacs-lisp
@@ -560,24 +579,32 @@
 * Evil
 ** General
 #+begin_src emacs-lisp
-	(use-package evil
-	  :ensure t
-	  :init (setq evil-want-keybinding nil)
-	  :config
-	  (evil-mode 1)
-	 (evil-global-set-key 'normal "\C-f" 'evil-scroll-down)
-	 (evil-global-set-key 'normal "\C-b" 'evil-scroll-up))
-
-	(use-package evil-collection
-	  :after evil
-	  :ensure t
-	  :config
-	  (evil-collection-init 'ibuffer)
-	  (evil-collection-init 'calendar)
-	  (evil-collection-init 'messages)
-	  (evil-collection-init 'custom))
-
+  (use-package evil
+	:ensure t
+	:init
+	(setq evil-want-keybinding nil)
+	(setq evil-disable-insert-state-bindings t)
+	:config
+	(evil-mode 1)
 	(setq evil-want-fine-undo t)
+	(evil-global-set-key 'normal "\C-f" 'evil-scroll-down)
+	(evil-global-set-key 'normal "\C-b" 'evil-scroll-up))
+
+  (use-package evil-collection
+	:after evil
+	:ensure t
+	:config
+	(evil-collection-init 'ibuffer)
+	(evil-collection-init 'calendar)
+	(evil-collection-init 'messages)
+	(evil-collection-init 'custom))
+
+
+  (use-package undo-tree
+	:ensure t
+	:diminish undo-tree-mode
+	:config (global-undo-tree-mode)
+	(evil-set-undo-system 'undo-tree))
 #+end_src
 ** Surround text
 #+begin_src emacs-lisp
@@ -588,32 +615,34 @@
 #+end_src
 ** Cursor by state
 #+begin_src emacs-lisp
-(setq evil-emacs-state-cursor '(box "#00EAFF")
-			 evil-normal-state-cursor '(box "#FFFFFF")
-			 evil-insert-state-cursor '(hbar "#FFFFFF")
-			 evil-visual-state-cursor '(box "#999999"))
+	  (setq evil-emacs-state-cursor '(box "#00EAFF")
+				   evil-normal-state-cursor '(box "#fff")
+				   evil-insert-state-cursor '(box "#00EAFF")
+				   evil-visual-state-cursor '(box "#999999"))
+  ;; (setq evil-insert-state-map (make-sparse-keymap))
+  ;; (define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state)
 #+end_src
 ** multiple cursor 
 #+begin_src emacs-lisp
   (use-package evil-mc
 	:ensure t
 	:config
-	(add-hook 'prog-mode-hook 'evil-mc-mode)
-	(add-hook 'org-mode-hook 'evil-mc-mode))
+	(global-evil-mc-mode 1))
 #+End_src
 ** Emacs initial state
 #+begin_src emacs-lisp 
-(evil-set-initial-state 'eshell-mode 'emacs)
-(evil-set-initial-state 'dashboard-mode 'emacs)
-(evil-set-initial-state 'term-mode 'emacs)
+  ;; (evil-set-initial-state 'eshell-mode 'emacs)
+  ;; (evil-set-initial-state 'dashboard-mode 'emacs)
+  ;; (evil-set-initial-state 'term-mode 'emacs)
 #+end_src
 * Projectile
   #+begin_src emacs-lisp
-	  (use-package projectile
-		:ensure t
-		:config 
-		(define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
-		(projectile-mode +1))
+	(use-package projectile
+	  :ensure t
+	  :diminish projectile-mode
+	  :config 
+	  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+	  (projectile-mode +1))
   #+end_src
 * Markdown mode
 #+begin_src emacs-lisp
