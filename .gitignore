@@ -20,3 +20,6 @@ games/*
 /transient/
 /url/
 /var/
+/.lsp-session-v1
+/eln-cache/
+/projects
