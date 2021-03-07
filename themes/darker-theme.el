@@ -336,6 +336,8 @@
 ;;;;; Modeline
        `(mode-line                           ((,class (:foreground ,fg
                                                                    :background ,doom-modeline-active :box (:line-width 1 :color ,grey-5)))))
+
+       `(header-line                           ((,class (:inherit mode-line))))
        `(mode-line-inactive                  ((,class (:foreground ,grey-6 :background ,powerline-main :box (:line-width 1 :color ,grey-6)))))
 ;;;;; NeoTree
        `(neo-dir-link-face                   ((,class (:foreground ,blue-org))))
