@@ -50,7 +50,7 @@
       (grey-org                  (if (display-graphic-p) "#DDDDDD" "#DDDDDD"))
       (purple-org                (if (display-graphic-p) "#9966FF" "#9966FF"))
       (blue-org                  (if (display-graphic-p) "#00EAFF" "#00EAFF"))
-      (dark-blue                 (if (display-graphic-p) "#004499" "#004499"))
+      (dark-blue                 (if (display-graphic-p) "#007180" "#007180"))
       (green-org                 (if (display-graphic-p) "#33FF55" "#33FF55"))
       (dark-powerline            (if (display-graphic-p) "#151515" "#151515"))
       (powerline-main            (if (display-graphic-p) "#202020" "#202020"))
@@ -66,12 +66,19 @@
       (custom-theme-set-faces
        'darker
        `(default                             ((,class (:foreground ,fg :background ,bg))))
+       `(fixed-pitch                         ((,class (:inherit default))))
 ;;;;; ACE/Avy
        `(aw-leading-char-face                ((,class (:foreground ,blue-org :height 1.2 :box (:line-width 1 :color , fg)))))
-       `(avy-lead-face                       ((,class (:background ,red-org))))
+       `(avy-lead-face                       ((,class (:background ,red-org :foreground ,fg))))
 ;;;;; Alchemist
        `(alchemist-test--failed-face         ((,class (:foreground ,red-org))))
        `(alchemist-test--success-face        ((,class (:foreground ,green-org))))
+;;;;; Calendar
+       
+       `(calendar-weekday-header             ((,class (:foreground , blue-org))))
+       `(calendar-month-header               ((,class (:foreground , yellow-org :bold t))))
+       `(calendar-weekend-header             ((,class (:foreground , grey-org ))))
+
 ;;;;; Company
        `(company-preview-common              ((,class (:foreground nil :background ,purple-org))))
        `(company-scrollbar-bg                ((,class (:background ,grey-0))))
@@ -93,10 +100,12 @@
        `(diredp-compressed-file-suffix       ((,class (:foreground ,fg))))
        `(diredp-date-time                    ((,class (:foreground ,green-org))))
        `(diredp-deletion                     ((,class (:foreground ,blue-org :background ,bg))))
-       `(diredp-dir-heading                  ((,class (:foreground ,green-org :background ,bg))))
+       `(diredp-dir-heading                  ((,class (:foreground ,blue-org :background ,bg))))
+       `(dired-directory                     ((,class (:foreground ,blue-org :background ,bg :weight bold))))
+       `(dired-header                        ((,class (:foreground ,blue-org :background ,bg :weight bold))))
        `(diredp-dir-priv                     ((,class (:foreground ,purple-org :background ,bg))))
        `(diredp-exec-priv                    ((,class (:foreground ,orange-org :background ,bg))))
-       `(diredp-file-name                    ((,class (:foreground ,green-org))))
+       `(diredp-file-name                    ((,class (:foreground ,blue-org))))
        `(diredp-file-suffix                  ((,class (:foreground ,fg))))
        `(diredp-flag-mark                    ((,class (:foreground ,blue-org :weight bold))))
        `(diredp-flag-mark-line               ((,class (:foreground ,purple-org :weight bold))))
@@ -104,10 +113,12 @@
        `(diredp-number                       ((,class (:foreground ,grey-6))))
        `(diredp-no-priv                      ((,class (:foreground ,fg :background ,bg))))
        `(diredp-rare-priv                    ((,class (:foreground ,blue-org :background ,bg))))
-       `(diredp-read-priv                    ((,class (:foreground ,green-org :background ,bg))))
+       `(diredp-read-priv                    ((,class (:foreground ,blue-org :background ,bg))))
        `(diredp-symlink                      ((,class (:foreground ,blue-org))))
        `(diredp-dir-name                     ((,class (:foreground ,blue-org))))
        `(diredp-write-priv                   ((,class (:foreground ,blue-org :background ,bg))))
+;;;;; Eglot
+       `(eglot-mode-line                     ((,class (:inherit font-lock-comment-face))))
 ;;;;; Emmet
        `(emmet-preview-output                ((,class (:background ,purple-org))))
 ;;;;; Elixir
@@ -169,7 +180,7 @@
        `(highlight                           ((,class (:foreground, fg :background , grey-4))))
        `(hl-line                             ((,class (:background ,grey-0))))
 ;;;;; iSearch
-       `(isearch                             ((,class (:foreground ,fg :background ,red-org))))
+       `(isearch                             ((,class (:foreground ,fg :background , dark-blue))))
        `(isearch-fail                        ((,class (:background ,red-org))))
 ;;;;; Ido
        `(ido-first-match                     ((,class (:foreground ,blue-org))))
@@ -177,13 +188,22 @@
        `(ido-subdir                          ((,class (:foreground ,fg))))
        `(ido-virtual                         ((,class (:foreground ,blue-org))))
 ;;;;; Ivy
-       `(ivy-current-match                   ((,class (:background ,grey-3))))
-       `(ivy-minibuffer-match-face-1         ((,class (:foreground ,green-org))))
-       `(ivy-minibuffer-match-face-2         ((,class (:foreground ,orange-org))))
-       `(ivy-minibuffer-match-face-3         ((,class (:foreground ,blue-org))))
-       `(ivy-minibuffer-match-face-4         ((,class (:foreground ,purple-org))))
-       `(ivy-subdir                          ((,class (:foreground ,green-org))))
+       `(ivy-current-match                   ((,class (:background ,dark-blue))))
+       `(ivy-minibuffer-match-face-1         ((,class (:inherit default :underline t :bold t))))
+       `(ivy-minibuffer-match-face-2         ((,class (:inherit default :underline t :bold t))))
+       `(ivy-minibuffer-match-face-3         ((,class (:inherit default :underline t :bold t))))
+       `(ivy-minibuffer-match-face-4         ((,class (:inherit default :underline t :bold t))))
+       `(ivy-subdir                          ((,class (:foreground ,blue-org))))
        `(ivy-modified-buffer                 ((,class (:foreground ,red-org))))
+;;;;; Swiper
+       `(swiper-background-match-face-1      ((,class (:foreground ,fg :background ,dark-blue))))
+       `(swiper-background-match-face-2      ((,class (:foreground ,fg :background ,dark-blue))))
+       `(swiper-background-match-face-3      ((,class (:foreground ,fg :background ,dark-blue))))
+       `(swiper-background-match-face-4      ((,class (:foreground ,fg :background ,dark-blue))))
+       `(swiper-match-face-1                 ((,class (:foreground ,fg :bold t))))
+       `(swiper-match-face-2                 ((,class (:foreground ,fg :bold t))))
+       `(swiper-match-face-3                 ((,class (:foreground ,fg :bold t))))
+       `(swiper-match-face-4                 ((,class (:foreground ,fg :bold t))))
 ;;;;; Jabber
        `(jabber-activity-personal-face       ((,class (:foreground ,purple-org :weight bold))))
        `(jabber-activity-face                ((,class (:foreground ,red-org :weight bold))))
@@ -399,6 +419,8 @@
        `(term-color-white                    ((,class (:foreground ,fg :background ,fg))))
        `(term-default-fg-color               ((,class (:inherit term-color-white))))
        `(term-default-bg-color               ((,class (:inherit term-color-black))))
+;;;;; Which-key
+       `(which-key-command-description-face  ((,class (:inherit default))))
 ;;;;; Whitespace
        `(trailing-whitespace                 ((,class (:background ,red-org))))
 ;;;;; Vertical border
